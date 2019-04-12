@@ -1,0 +1,9 @@
+create_table("notices") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("send_to", "string", {})
+	t.Column("user_name", "string", {})
+	t.Column("subject", "string", {})
+	t.Column("content", "string", {"size": 4000})
+	t.Column("status", "string", {})
+	t.Column("sent_date", "string", {})
+}

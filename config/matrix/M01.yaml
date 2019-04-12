@@ -1,0 +1,27 @@
+title: 供应链数据
+sections:
+  - section: 采购
+    indexes:
+      - name: 采购金额
+        code: 1.1
+        description: 一年采购总额
+        unit: 万元
+
+      - name: 周转率
+        code: 1.2
+        description: 库存周转率
+        unit: 万元
+
+  - section: 生产
+    indexes:
+      - name: 制造周期
+        code: 2.1
+        description: 一年采购总额
+        unit: 天
+
+      - name: 良品率
+        code: 2.2
+        description: 库存周转率
+        unit: '%'
+
+

@@ -5,11 +5,20 @@ import (
 
 	"github.com/gobuffalo/envy"
 	"github.com/gobuffalo/pop"
+	"github.com/gofrs/uuid"
 )
 
 // DB is a connection to your database to be used
 // throughout your application.
 var DB *pop.Connection
+
+// IDT uuid
+type IDT struct {
+	ID uuid.UUID `json:"id" db:"id"`
+}
+
+// IDList uuid list
+type IDList []IDT
 
 func init() {
 	var err error

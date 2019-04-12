@@ -42,7 +42,7 @@ func App() *buffalo.App {
 		})
 
 		// Automatically redirect to SSL
-		app.Use(forceSSL())
+		// app.Use(forceSSL())
 
 		// Log request parameters (filters apply).
 		app.Use(paramlogger.ParameterLogger)
@@ -59,7 +59,25 @@ func App() *buffalo.App {
 		// Setup and use translations:
 		app.Use(translations())
 
-		app.GET("/", HomeHandler)
+		app.GET("/", homeHandler)
+		app.GET("/login", loginHandler)
+
+		app.GET("/charts", ChartsHandler)
+		app.GET("/bootstrap-components", UIElementHandler)
+
+		app.GET("/routes", routesHandler)
+
+		app.GET("/surveys/open", SurveysOpen)
+		app.POST("/surveys/submit", SurveysSubmit)
+
+		app.GET("/matrix/open", MatrixOpen)
+		app.POST("/matrix/open", MatrixSubmit)
+
+		// 在生产环境里，页面不存在时，重定向到统一的页面
+		app.GET("/notFound", notFoundHandler)
+		// if ENV == "production" {
+		app.ErrorHandlers[404] = pageNotFound
+		// }
 
 		app.ServeFiles("/", assetsBox) // serve files from the public directory
 	}
@@ -89,4 +107,43 @@ func forceSSL() buffalo.MiddlewareFunc {
 		SSLRedirect:     ENV == "production",
 		SSLProxyHeaders: map[string]string{"X-Forwarded-Proto": "https"},
 	})
+}
+
+func pageNotFound(status int, err error, c buffalo.Context) error {
+	// res := c.Response()
+	// res.WriteHeader(404)
+	// res.Write([]byte(fmt.Sprintf("Oops!! There was an error %s", err.Error())))
+
+	// c.Redirect(307, "notFoundPath()")
+	// c.Render(200, r.HTML("notFound.html", "layout/empty.html"))
+	tmpl := `
+	<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>Survey</title>
+
+		<link rel="stylesheet" href="/assets/vendors/main.css">
+
+		<link rel="icon" href="/assets/images/favicon.ico">
+
+  </head>
+
+  <body class="app">
+	<main>
+		<div class="page-error tile">
+			<h1><i class="fa fa-exclamation-circle"></i> 信息不存在 </h1>
+			<p>The page you have requested is not found.</p>
+			<p><a class="btn btn-primary" href="javascript:window.history.back();">返回</a></p>
+		</div>
+	</main>
+  </body>
+</html>
+	`
+	res := c.Response()
+	res.WriteHeader(404)
+	res.Write([]byte(tmpl))
+
+	return nil
 }

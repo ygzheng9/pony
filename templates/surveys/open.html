@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-6">
+        <h3><%= p.Title %> </h3>
+        <div class="alert alert-danger" role="alert" id="alertInfo" style="display:none">
+            <div id="errorInfo"></div>
+        </div>
+        <%= form({action: surveysSubmitPath({num: p.SurveyNum, id: p.ID}), method: "POST", id: "surveyForm"}) { %>
+            <%= for (section) in p.Sections { %>
+                <h5><%= section.Section %></h5>
+                <%= for (index, question) in section.Questions { %>
+                    <div class="form-group">
+                        <div class="question-title" data-seq=<%= question.SeqNum %> > <b> <%= question.SeqNum %> : <%= question.Question %> </b> </div>
+                        <%= if ("text" == question.Type) { %>
+                            <input class="form-control" name=<%= question.SeqNum %> value="">
+                        <% } else if ("checkbox" == question.Type || "radio" == question.Type) { %>
+                            <%= for (i, option) in question.Options { %>
+                            <div class="form-check">
+                                <input class="form-check-input" type=<%= question.Type %> name=<%= question.SeqNum %> value=<%= i + 1 %> >
+                                <label class="form-check-label">
+                                    <%= option %>
+                                </label>
+                            </div>
+                            <% } %>
+                        <% } else if ("sort" == question.Type) { %>
+                            <input class="form-control" type="hidden" name=<%= question.SeqNum %> id=<%= question.SeqNum %> value="">
+                            <div class="sort" data-target=<%= question.SeqNum%> >
+                            <%= for (i, option) in question.Options { %>
+                                <div class="option" data-seq=<%= i + 1 %> data-value=<%=option%>>
+                                    <span class="action-up"><i class="fa fa-arrow-up"></i></span>
+                                    <span class="action-down"><i class="fa fa-arrow-down"></i></span>
+                                    <%= option %>
+                                </div>
+                            <% } %>
+                            </div>
+                        <% } %>
+                    </div>
+                <% } %>
+                <br>
+            <% } %>
+            <button id="btnSubmit" class="btn btn-primary">提交</button>
+        <% } %>
+    </div>
+</div>
+
+
+<%= contentFor("pageJS") { %>
+    <%= javascriptTag("survey.js") %>
+<% } %>

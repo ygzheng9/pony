@@ -1,0 +1,51 @@
+<div class="row">
+    <div id="idData" data-server='<%= json(p) %>' hidden></div>
+    <div id="idTest" hidden></div>
+
+    <div class="col-12">
+        <h3><%= p.Title %> <span id="selectedYear"><%= p.Period %> <i class="fa fa-star" id="idChangedMark" style="display:none;color:red"></i></span>  </h3>
+        <div class="alert alert-danger" role="alert" id="alertInfo" style="display:none">
+            <div id="errorInfo"></div>
+        </div>
+
+        <%= form({method: "POST", id: "matrixForm"}) { %>
+        <input type="hidden" name="period" id="period" value="<%= p.Period %>">
+
+        <%= for (y) in p.PeriodOptions { %>
+        <a class="btn btn-secondary year" data-year="<%= y %>" href="/matrix/open/?num=<%= p.MatrixNum %>&period=<%= y %>"><%= y %></a>
+        <% } %>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col" width="10%">#</th>
+                <th scope="col" width="20%">指标</th>
+                <th scope="col" width="10%">单位</th>
+                <th scope="col">指标值</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%= for (section) in p.Sections { %>
+                <tr>
+                    <th scope="row" colspan="4"><div class="text-primary"><%= section.Section %></div></th>
+                </tr>
+                <%= for (i, index) in section.Indexes { %>
+                <tr>
+                    <th scope="row"><%= index.Code %></th>
+                    <td> <div data-container="body" data-toggle="popover" data-placement="left" data-content=<%= index.Description %> > <%= index.Name %> </div></td>
+                    <td><%= index.Unit %></td>
+                    <td><input class="indexValue" name=<%= index.Code %> value="<%= index.Value %>" ></td>
+                </tr>
+                <% } %>
+            <% } %>
+            </tbody>
+        </table>
+        <button id="btnSubmit" class="btn btn-primary">提交</button>
+        <% } %>
+    </div>
+</div>
+
+
+<%= contentFor("pageJS") { %>
+    <%= javascriptTag("matrix.js") %>
+<% } %>

@@ -1,0 +1,39 @@
+title: 创新焦点
+sections:
+- section: 国内
+  questions:
+  - question: 新产品
+    type: checkbox
+    seq: 1.1
+    options:
+      - 地板
+      - 毛毯
+      - 瓷砖
+
+  - question: 新市场
+    type: radio
+    seq: 1.2
+    options:
+      - 欧美
+      - 亚太
+      - 中东
+
+- section: 国外
+  questions:
+  - question: 新业务
+    type: checkbox
+    seq: 2.1
+    options:
+      - 铺装
+      - 换新
+      - 打蜡
+
+  - question: 新客户
+    type: checkbox
+    seq: 2.2
+    options:
+      - 房地产
+      - 装修公司
+      - 设计师
+      - 大卖场
+

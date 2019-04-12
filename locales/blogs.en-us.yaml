@@ -1,0 +1,6 @@
+- id: "blog.created.success"
+  translation: "Blog was successfully created."
+- id: "blog.updated.success"
+  translation: "Blog was successfully updated."
+- id: "blog.destroyed.success"
+  translation: "Blog was successfully destroyed."

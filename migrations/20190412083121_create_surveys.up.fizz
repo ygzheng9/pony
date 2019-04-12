@@ -1,0 +1,8 @@
+create_table("surveys") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("survey_no", "string", {})
+	t.Column("submit_user", "string", {})
+	t.Column("question_no", "string", {})
+	t.Column("answers", "string", {})
+	t.Column("submit_date", "string", {})
+}
