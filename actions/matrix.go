@@ -3,7 +3,6 @@ package actions
 import (
 	"fmt"
 	"io/ioutil"
-	"strconv"
 	"time"
 
 	"github.com/gobuffalo/buffalo"
@@ -25,6 +24,7 @@ func MatrixOpen(c buffalo.Context) error {
 		SubmitUser string `form:"user" json:"user"`
 		Period     string `form:"period" json:"period" db:"period"`
 		Company    string `form:"company" json:"company" db:"company"`
+		Version    string `form:"version" json:"version" db:"version"`
 	}{}
 	err = c.Bind(&info)
 	if err != nil {
@@ -32,6 +32,12 @@ func MatrixOpen(c buffalo.Context) error {
 	}
 	if len(info.Period) == 0 {
 		info.Period = "2018"
+	}
+	if len(info.Company) == 0 {
+		info.Company = "PD"
+	}
+	if len(info.Version) == 0 {
+		info.Version = "ACTUAL"
 	}
 
 	// 根据 matrix，period，company 找到之前提交的数据
@@ -119,11 +125,11 @@ type matrixSectionT struct {
 }
 
 type indexT struct {
-	Name        string  `yaml:"name"`
-	Code        string  `yaml:"code"`
-	Description string  `yaml:"description"`
-	Unit        string  `yaml:"unit"`
-	Value       float64 `yaml:"value"`
+	Name        string `yaml:"name"`
+	Code        string `yaml:"code"`
+	Description string `yaml:"description"`
+	Unit        string `yaml:"unit"`
+	Value       string `yaml:"value"`
 }
 
 func loadMatrix(num string) (matrixT, error) {
@@ -155,10 +161,20 @@ func MatrixSubmit(c buffalo.Context) error {
 		SubmitUser string `form:"id" json:"id"`
 		Period     string `form:"period" json:"period"`
 		Company    string `form:"company" json:"company"`
+		Version    string `form:"version" json:"version" db:"version"`
 	}{}
 	err = c.Bind(&info)
 	if err != nil {
 		return errors.WithStack(err)
+	}
+	if len(info.Period) == 0 {
+		info.Period = "2018"
+	}
+	if len(info.Company) == 0 {
+		info.Company = "PD"
+	}
+	if len(info.Version) == 0 {
+		info.Version = "ACTUAL"
 	}
 
 	s, err := loadMatrix(info.MatrixNum)
@@ -176,21 +192,21 @@ func MatrixSubmit(c buffalo.Context) error {
 	for _, m := range s.Sections {
 		for _, i := range m.Indexes {
 			v := c.Request().Form[i.Code]
-			f, err := strconv.ParseFloat(v[0], 64)
-			if err != nil {
-				c.LogField("raw", v)
-				f = 0.0
-			}
-
-			fmt.Printf("[%s]: %f\n", i.Code, f)
+			// f, err := strconv.ParseFloat(v[0], 64)
+			// if err != nil {
+			// 	c.LogField("raw", v)
+			// 	f = 0.0
+			// }
+			fmt.Printf("[%s]: %s\n", i.Code, v)
 
 			a := models.Matrix{
 				Company:    info.Company,
+				Version:    info.Version,
 				Matrix:     info.MatrixNum,
 				Period:     info.Period,
 				SubmitUser: info.SubmitUser,
 				Code:       i.Code,
-				Value:      f,
+				Value:      v[0],
 			}
 
 			matrices = append(matrices, a)
@@ -251,15 +267,15 @@ func MatrixSubmit(c buffalo.Context) error {
 		}
 	}
 
-	// 提交表单后，打开页面，和提交前是同一个
+	// 提交表单
 	p := struct {
-		Period    string
-		Title     string
-		MatrixNum string
+		Title  string
+		Period string
+		From   string
 	}{
-		Period:    info.Period,
-		Title:     s.Title,
-		MatrixNum: info.MatrixNum,
+		Title:  s.Title,
+		Period: info.Period,
+		From:   c.Request().RequestURI,
 	}
 	c.Set("p", p)
 	return c.Render(200, r.HTML("matrix/success.html", "surveys/simple.html"))

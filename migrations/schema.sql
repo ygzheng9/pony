@@ -20,78 +20,17 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: t_email; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.t_email (
-    "ID" integer NOT NULL,
-    "SEND_TO" character varying(50),
-    "CRE_DTE" character varying(40),
-    "USR_NME" character varying(255),
-    "SUBJ" character varying(255),
-    "CTENT" character varying(8000),
-    "STS" character varying(10),
-    "SENT_DTE" character varying(40)
-);
-
-
-ALTER TABLE public.t_email OWNER TO postgres;
-
---
--- Name: TABLE t_email; Type: COMMENT; Schema: public; Owner: postgres
---
-
-COMMENT ON TABLE public.t_email IS '邮件信息';
-
-
---
--- Name: T_EMAIL_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public."T_EMAIL_id_seq"
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public."T_EMAIL_id_seq" OWNER TO postgres;
-
---
--- Name: T_EMAIL_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public."T_EMAIL_id_seq" OWNED BY public.t_email."ID";
-
-
---
--- Name: blogs; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.blogs (
-    id uuid NOT NULL,
-    title character varying(255) NOT NULL,
-    content character varying(255) NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
-ALTER TABLE public.blogs OWNER TO postgres;
-
---
 -- Name: matrices; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.matrices (
     id uuid NOT NULL,
     company character varying(255) NOT NULL,
+    version character varying(255) NOT NULL,
     period character varying(255) NOT NULL,
     matrix character varying(255) NOT NULL,
     code character varying(255) NOT NULL,
-    value numeric NOT NULL,
+    value character varying(255) NOT NULL,
     submit_user character varying(255) NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -147,29 +86,6 @@ CREATE TABLE public.surveys (
 
 
 ALTER TABLE public.surveys OWNER TO postgres;
-
---
--- Name: t_email ID; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.t_email ALTER COLUMN "ID" SET DEFAULT nextval('public."T_EMAIL_id_seq"'::regclass);
-
-
---
--- Name: t_email T_EMAIL_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.t_email
-    ADD CONSTRAINT "T_EMAIL_pkey" PRIMARY KEY ("ID");
-
-
---
--- Name: blogs blogs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.blogs
-    ADD CONSTRAINT blogs_pkey PRIMARY KEY (id);
-
 
 --
 -- Name: matrices matrices_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres

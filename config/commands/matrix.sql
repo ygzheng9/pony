@@ -3,6 +3,7 @@ select id, company, period, matrix, code, value,
        submit_user, created_at, updated_at
   from matrices
  where company = :company
+   and version = :version
    and period = :period
    and matrix = :matrix;
 
@@ -10,6 +11,7 @@ select id, company, period, matrix, code, value,
 select id
   from matrices
 where company = :company
+  and version = :version
   and period = :period
   and matrix = :matrix
   and code = :code;

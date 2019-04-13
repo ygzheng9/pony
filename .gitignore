@@ -26,3 +26,4 @@ dist/
 generated/
 .vendor/
 
+config/matrix/~*.xlsx

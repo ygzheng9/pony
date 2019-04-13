@@ -1,3 +1,5 @@
+drop_table("matrices")
+
 create_table("matrices") {
 	t.Column("id", "uuid", {primary: true})
 	t.Column("company", "string", {})

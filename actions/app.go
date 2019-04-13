@@ -73,6 +73,8 @@ func App() *buffalo.App {
 
 		app.GET("/matrix/open", MatrixOpen)
 		app.POST("/matrix/open", MatrixSubmit)
+		app.GET("/matrix/openTypeA", MatrixOpenTypeA)
+		app.POST("/matrix/openTypeA", MatrixSubmitTypeA)
 
 		// 在生产环境里，页面不存在时，重定向到统一的页面
 		app.GET("/notFound", notFoundHandler)
