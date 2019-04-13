@@ -20,16 +20,16 @@ type ColumnInfo struct {
 
 // ColumnInfoByTable 根据 tablename 获取 column
 func columnInfoByTable(tableName string) ([]ColumnInfo, error) {
-	// sugar := Sugar()
-
+	var err error
+	sugar := Sugar()
 	db := DB()
 	kv := KvCache()
 
 	sqlCmd := kv.GetCommand("meta.postgresColumns", nil)
-	// fmt.Print(sqlCmd)
+	sugar.Info(sqlCmd)
 
 	var items []ColumnInfo
-	err := db.Select(&items, sqlCmd, "pony_development", tableName)
+	err = db.Select(&items, sqlCmd, "pony_development", tableName)
 
 	return items, err
 }

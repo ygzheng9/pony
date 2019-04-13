@@ -5,9 +5,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gobuffalo/envy"
-
 	"github.com/gobuffalo/buffalo"
+	"github.com/gobuffalo/envy"
 	"github.com/gobuffalo/pop"
 	"github.com/pkg/errors"
 	"gopkg.in/yaml.v2"

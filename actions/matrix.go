@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/gobuffalo/buffalo"
+	"github.com/gobuffalo/envy"
 	"github.com/gobuffalo/pop"
 	"github.com/pkg/errors"
 	"gopkg.in/yaml.v2"
@@ -15,6 +16,7 @@ import (
 	"pony/models"
 )
 
+// MatrixOpen open matrix sheet for input
 func MatrixOpen(c buffalo.Context) error {
 	// 从 querystring 中获取参数
 	var err error
@@ -43,8 +45,8 @@ func MatrixOpen(c buffalo.Context) error {
 	sugar := base.Sugar()
 	db := tx.TX
 
-	cmdSql := kv.GetCommand("matrix.findBy", nil)
-	nstmt, err := db.PrepareNamed(cmdSql)
+	cmdSQL := kv.GetCommand("matrix.findBy", nil)
+	nstmt, err := db.PrepareNamed(cmdSQL)
 	if err != nil {
 		sugar.Errorw("preparedNamed failed", "err", err)
 		return errors.WithStack(err)
@@ -127,7 +129,9 @@ type indexT struct {
 func loadMatrix(num string) (matrixT, error) {
 	var s matrixT
 
-	fileName := "./config/matrix/" + num + ".yaml"
+	dir := envy.Get("MatrixDir", "")
+
+	fileName := dir + "/" + num + ".yaml"
 	source, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		return s, err
@@ -141,6 +145,7 @@ func loadMatrix(num string) (matrixT, error) {
 	return s, nil
 }
 
+// MatrixSubmit submit results
 func MatrixSubmit(c buffalo.Context) error {
 	// 从 querystring 中获取 问卷编号
 	var err error
@@ -203,14 +208,14 @@ func MatrixSubmit(c buffalo.Context) error {
 	db := tx.TX
 
 	// 按照 (问卷编号 + 提交人) 删除
-	cmdSql := kv.GetCommand("matrix.checkExist", nil)
-	nstmt, err := db.PrepareNamed(cmdSql)
+	cmdSQL := kv.GetCommand("matrix.checkExist", nil)
+	nstmt, err := db.PrepareNamed(cmdSQL)
 	if err != nil {
 		sugar.Errorw("preparedNamed failed", "err", err)
 		return errors.WithStack(err)
 	}
 
-	updSql := kv.GetCommand("matrix.updateValue", nil)
+	updSQL := kv.GetCommand("matrix.updateValue", nil)
 	now := time.Now()
 
 	for _, m := range matrices {
@@ -239,7 +244,7 @@ func MatrixSubmit(c buffalo.Context) error {
 			m.UpdatedAt = now
 			// sugar.Infow("update", "i", m)
 
-			_, err = db.NamedExec(updSql, m)
+			_, err = db.NamedExec(updSQL, m)
 			if err != nil {
 				sugar.Errorw("update failed", "err", err, "entry", m)
 			}
