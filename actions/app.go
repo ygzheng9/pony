@@ -76,6 +76,9 @@ func App() *buffalo.App {
 		app.GET("/matrix/openTypeA", MatrixOpenTypeA)
 		app.POST("/matrix/openTypeA", MatrixSubmitTypeA)
 
+		app.GET("/chart/first", ChartFirst)
+		app.GET("/chart/get_wordcloud", WordCloudHandle)
+
 		// 在生产环境里，页面不存在时，重定向到统一的页面
 		app.GET("/notFound", notFoundHandler)
 		// if ENV == "production" {

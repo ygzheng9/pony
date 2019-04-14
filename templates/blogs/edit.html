@@ -1,8 +1,0 @@
-<div class="page-header">
-  <h1>Edit Blog</h1>
-</div>
-
-<%= form_for(blog, {action: blogPath({ blog_id: blog.ID }), method: "PUT"}) { %>
-  <%= partial("blogs/form.html") %>
-  <a href="<%= blogPath({ blog_id: blog.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
-<% } %>

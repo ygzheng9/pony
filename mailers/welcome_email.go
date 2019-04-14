@@ -17,16 +17,17 @@ func SendWelcomeEmails() error {
 
 	m := mail.NewMessage()
 
+	// fill in with your stuff:
+	m.Subject = "Welcome Email"
+
 	addr := stdmail.Address{
 		Name:    "想知道",
 		Address: "ibmpartment@powerdekor.com.cn",
 	}
 	from := addr.String()
 	sugar.Infow("email", "from", from)
-
-	// fill in with your stuff:
-	m.Subject = "Welcome Email"
 	m.From = from
+
 	m.To = []string{"yonggang.zheng@qq.com", "ibmpartment@powerdekor.com.cn"}
 
 	surveyDir := envy.Get("SurveyDir", "./config/surveys")

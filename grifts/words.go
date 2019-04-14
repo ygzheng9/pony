@@ -27,8 +27,8 @@ var _ = grift.Namespace("words", func() {
 
 	grift.Desc("skip", "Show skip words")
 	grift.Add("skip", func(c *grift.Context) error {
-		skips := readSkipWords()
-		fmt.Print(skips)
+		// skips := readSkipWords()
+		// fmt.Print(skips)
 		return nil
 	})
 
@@ -54,14 +54,14 @@ var _ = grift.Namespace("words", func() {
 
 })
 
-func isStrSliceContainStr(s []string, e string) bool {
-	for _, a := range s {
-		if a == e {
-			return true
-		}
-	}
-	return false
-}
+// func isStrSliceContainStr(s []string, e string) bool {
+// 	for _, a := range s {
+// 		if a == e {
+// 			return true
+// 		}
+// 	}
+// 	return false
+// }
 
 func isMapKeyMatchStr(mapStr map[string]string, key string) bool {
 	for k := range mapStr {
@@ -72,20 +72,20 @@ func isMapKeyMatchStr(mapStr map[string]string, key string) bool {
 	return false
 }
 
-// readSkipWords get all skip words
-func readSkipWords() []string {
-	var err error
-	sugar := base.Sugar()
+// // readSkipWords get all skip words
+// func readSkipWords() []string {
+// 	var err error
+// 	sugar := base.Sugar()
 
-	dir := envy.Get("WordDir", "./config/words")
-	file := dir + "/skip.txt"
-	lines, err := base.ReadLines(file)
-	if err != nil {
-		sugar.Errorw("failed to get skipword", "file", file)
-		return []string{}
-	}
-	return lines
-}
+// 	dir := envy.Get("WordDir", "./config/words")
+// 	file := dir + "/skip.txt"
+// 	lines, err := base.ReadLines(file)
+// 	if err != nil {
+// 		sugar.Errorw("failed to get skipword", "file", file)
+// 		return []string{}
+// 	}
+// 	return lines
+// }
 
 // readMergeWords get all mapping a -> b
 func readMergeWords() map[string]string {
@@ -197,7 +197,9 @@ func dumpWords() {
 	defer x.Free()
 
 	// 在处理过程中过滤掉无关的高频词
-	excludes := readSkipWords()
+	// excludes := readSkipWords()
+	excludes := []string{}
+
 	// 替换的词
 	mergeData := readMergeWords()
 
@@ -292,8 +294,8 @@ func parseFile(file string, eng *gojieba.Jieba, excludes []string, mergeData map
 	for _, word := range words {
 		if utf8.RuneCountInString(word) == 1 {
 			continue
-		} else if isStrSliceContainStr(excludes, word) {
-			continue
+			// } else if isStrSliceContainStr(excludes, word) {
+			// 	continue
 		} else if isMapKeyMatchStr(mergeData, word) {
 			rword = mergeData[word]
 		} else {
@@ -324,7 +326,7 @@ func rawSplit(file string) []kv {
 	counts := make(map[string]int)
 
 	// 在处理过程中过滤掉无关的高频词
-	excludes := []string{"什么", "一个", "我们", "那里"}
+	// excludes := []string{"什么", "一个", "我们", "那里"}
 
 	// 替换的词
 	mergeData := make(map[string]string)
@@ -341,8 +343,8 @@ func rawSplit(file string) []kv {
 	for _, word := range words {
 		if utf8.RuneCountInString(word) == 1 {
 			continue
-		} else if isStrSliceContainStr(excludes, word) {
-			continue
+			// } else if isStrSliceContainStr(excludes, word) {
+			// 	continue
 		} else if isMapKeyMatchStr(mergeData, word) {
 			rword = mergeData[word]
 		} else {
