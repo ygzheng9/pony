@@ -1,0 +1,6 @@
+create_table("words") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("doc_name", "string", {})
+	t.Column("word", "string", {})
+	t.Column("count", "integer", {})
+}

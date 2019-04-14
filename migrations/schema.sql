@@ -88,6 +88,22 @@ CREATE TABLE public.surveys (
 ALTER TABLE public.surveys OWNER TO postgres;
 
 --
+-- Name: words; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.words (
+    id uuid NOT NULL,
+    doc_name character varying(255) NOT NULL,
+    word character varying(255) NOT NULL,
+    count integer NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.words OWNER TO postgres;
+
+--
 -- Name: matrices matrices_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -109,6 +125,14 @@ ALTER TABLE ONLY public.notices
 
 ALTER TABLE ONLY public.surveys
     ADD CONSTRAINT surveys_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: words words_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.words
+    ADD CONSTRAINT words_pkey PRIMARY KEY (id);
 
 
 --

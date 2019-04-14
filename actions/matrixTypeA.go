@@ -1,13 +1,13 @@
 package actions
 
 import (
+	"bytes"
 	"pony/base"
 	"pony/models"
 	"time"
 
 	"github.com/360EntSecGroup-Skylar/excelize"
 	"github.com/gobuffalo/buffalo"
-	"github.com/gobuffalo/envy"
 	"github.com/gobuffalo/pop"
 	"github.com/pkg/errors"
 )
@@ -130,9 +130,13 @@ func loadTypeA(num string) (string, []itemTypeA, error) {
 	sugar := base.Sugar()
 
 	// 从文件中读取
-	dir := envy.Get("MatrixDir", "")
-	fileName := dir + "/" + num + ".xlsx"
-	xlsx, err := excelize.OpenFile(fileName)
+	fileName := "matrix/" + num + ".xlsx"
+	source, err := base.Box.Find(fileName)
+	if err != nil {
+		return "", nil, err
+	}
+
+	xlsx, err := excelize.OpenReader(bytes.NewReader(source))
 	if err != nil {
 		return "", nil, err
 	}

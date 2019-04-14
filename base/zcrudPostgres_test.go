@@ -10,7 +10,7 @@ func TestPrintSubCode(t *testing.T) {
 	SetRoot()
 
 	// CRUD
-	err := printSubCode("notices")
+	err := PrintSubCode("notices")
 	if err != nil {
 		t.Errorf("err: %+v\n", err)
 	}

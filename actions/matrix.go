@@ -2,11 +2,9 @@ package actions
 
 import (
 	"fmt"
-	"io/ioutil"
 	"time"
 
 	"github.com/gobuffalo/buffalo"
-	"github.com/gobuffalo/envy"
 	"github.com/gobuffalo/pop"
 	"github.com/pkg/errors"
 	"gopkg.in/yaml.v2"
@@ -135,10 +133,12 @@ type indexT struct {
 func loadMatrix(num string) (matrixT, error) {
 	var s matrixT
 
-	dir := envy.Get("MatrixDir", "")
+	// dir := envy.Get("MatrixDir", "")
+	// fileName := dir + "/" + num + ".yaml"
+	// source, err := ioutil.ReadFile(fileName)
 
-	fileName := dir + "/" + num + ".yaml"
-	source, err := ioutil.ReadFile(fileName)
+	fileName := "matrix/" + num + ".yaml"
+	source, err := base.Box.Find(fileName)
 	if err != nil {
 		return s, err
 	}

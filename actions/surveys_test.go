@@ -14,7 +14,6 @@ func (as *ActionSuite) Test_Surveys_Submit() {
 	as.Fail("Not Implemented!")
 }
 
-
 func Test_datetime(t *testing.T) {
 	now := time.Now()
 

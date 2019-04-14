@@ -43,7 +43,7 @@ func mapToName(cols []ColumnInfo) []string {
 	return result
 }
 
-func printSubCode(table string) error {
+func PrintSubCode(table string) error {
 	items, err := genStubCode(table)
 	if err != nil {
 		return err

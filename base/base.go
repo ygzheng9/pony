@@ -1,21 +1,8 @@
 package base
 
 import (
-	"fmt"
-	"os"
-	"path"
-	"runtime"
+	packr "github.com/gobuffalo/packr/v2"
 )
 
-// SetRoot make up level folder the running folder
-func SetRoot() {
-	// 设定目录: 当前文件的上级目录为运行时的目录
-	_, filename, _, _ := runtime.Caller(0)
-	dir := path.Join(path.Dir(filename), "..")
-	fmt.Printf("exe root: %s\n", dir)
-
-	err := os.Chdir(dir)
-	if err != nil {
-		panic(err)
-	}
-}
+// Box for base, will packr to binary file
+var Box = packr.New("app:baseBox", "../baseBox")
