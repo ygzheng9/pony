@@ -13,6 +13,12 @@ import (
 	"pony/models"
 )
 
+const (
+	defaultVersion = "ACTUAL"
+	defaultPeriod  = "2018"
+	defaultCompany = "PD"
+)
+
 // MatrixOpen open matrix sheet for input
 func MatrixOpen(c buffalo.Context) error {
 	// 从 querystring 中获取参数
@@ -28,14 +34,14 @@ func MatrixOpen(c buffalo.Context) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	if len(info.Period) == 0 {
-		info.Period = "2018"
+	if info.Period == "" {
+		info.Period = defaultPeriod
 	}
-	if len(info.Company) == 0 {
-		info.Company = "PD"
+	if info.Company == "" {
+		info.Company = defaultCompany
 	}
-	if len(info.Version) == 0 {
-		info.Version = "ACTUAL"
+	if info.Version == "" {
+		info.Version = defaultVersion
 	}
 
 	// 根据 matrix，period，company 找到之前提交的数据
@@ -81,11 +87,11 @@ func MatrixOpen(c buffalo.Context) error {
 	// 	}
 	// }
 
-	for _, section := range s.Sections {
-		for j, idx := range section.Indexes {
-			for _, v := range items {
-				if v.Code == idx.Code {
-					section.Indexes[j].Value = v.Value
+	for i, section := range s.Sections {
+		for j := range section.Indexes {
+			for k := range items {
+				if items[k].Code == section.Indexes[j].Code {
+					s.Sections[i].Indexes[j].Value = items[k].Value
 					continue
 				}
 			}
@@ -167,14 +173,14 @@ func MatrixSubmit(c buffalo.Context) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	if len(info.Period) == 0 {
-		info.Period = "2018"
+	if info.Period == "" {
+		info.Period = defaultPeriod
 	}
-	if len(info.Company) == 0 {
-		info.Company = "PD"
+	if info.Company == "" {
+		info.Company = defaultCompany
 	}
-	if len(info.Version) == 0 {
-		info.Version = "ACTUAL"
+	if info.Version == "" {
+		info.Version = defaultVersion
 	}
 
 	s, err := loadMatrix(info.MatrixNum)
@@ -234,7 +240,8 @@ func MatrixSubmit(c buffalo.Context) error {
 	updSQL := kv.GetCommand("matrix.updateValue", nil)
 	now := time.Now()
 
-	for _, m := range matrices {
+	for i := range matrices {
+		var m = matrices[i]
 		var ids models.IDList
 
 		// 按照关键字段查找
@@ -246,11 +253,8 @@ func MatrixSubmit(c buffalo.Context) error {
 
 		if len(ids) == 0 {
 			// 新增
-			// sugar.Infow("create", "i", m)
-
-			_, err := tx.ValidateAndCreate(&m)
+			_, err = tx.ValidateAndCreate(&m)
 			if err != nil {
-				// return errors.WithStack(err)
 				sugar.Errorw("failed to save index", "i", m, "err", err)
 				continue
 			}
@@ -258,7 +262,6 @@ func MatrixSubmit(c buffalo.Context) error {
 			// 更新
 			m.ID = ids[0].ID
 			m.UpdatedAt = now
-			// sugar.Infow("update", "i", m)
 
 			_, err = db.NamedExec(updSQL, m)
 			if err != nil {

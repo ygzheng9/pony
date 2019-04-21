@@ -1,0 +1,8 @@
+create_table("game_options") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("game_id", "uuid", {})
+	t.Column("seq", "integer", {})
+	t.Column("pairs", "string", {})
+	t.Column("weights", "string", {})
+	t.Column("ratios", "string", {})
+}

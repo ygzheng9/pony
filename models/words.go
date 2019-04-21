@@ -20,7 +20,7 @@ type Word struct {
 }
 
 // String is not required by pop and may be deleted
-func (w Word) String() string {
+func (w *Word) String() string {
 	jw, _ := json.Marshal(w)
 	return string(jw)
 }

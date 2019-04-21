@@ -1,0 +1,177 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h3 class="tile-title">待决策问题</h3>
+            <div class="tile-body">
+                <form class="row">
+                    <div class="form-group col-md-3">
+                        <input id="game_name" class="form-control" type="text" placeholder="请输入待决策问题">
+                    </div>
+                    <div class="form-group col-md-4 align-self-end">
+                        <div id="game_id" hidden > </div>
+                        <div id="game_inst" hidden></div>
+                        <button id="btnCreate" class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>开始</button>
+                        <div id="created_at"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="tile">
+            <h3 class="tile-title">选择标准</h3>
+            <div id="criterionRaw">
+                <div class="tile-body">
+                    <div class="form-group">
+                        <textarea id="criterion_text" class="form-control" rows="10" placeholder="Enter your address"></textarea>
+                    </div>
+                </div>
+                <div class="tile-footer">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-3">
+                            <button id="btnCriterion" class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="criterionDisplay">
+                <div class="tile-body">
+                    <div class="bs-component">
+                        <table class="table">
+                            <tbody id="criterionTable">
+                            <%#= will replace by js %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tile-footer">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-3">
+                            <button id="btnCriterionModify" class="btn btn-outline-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>修改</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="tile">
+            <h3 class="tile-title">选择标准的重要度</h3>
+            <div class="tile-body">
+                <div class="form-group">
+                    <div id="tblCriterion"></div>
+                    <div id="criterionResult"></div>
+                </div>
+            </div>
+            <div class="tile-footer">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-3">
+                        <button id="btnCriterionReset" class="btn btn-outline-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>重置</button>
+                        <button id="btnCriterionReload" class="btn btn-outline-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>加载</button>
+                        <button id="btnCriterionSave" class="btn btn-outline-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="tile">
+            <h3 class="tile-title">可选项</h3>
+            <div id="optionsRaw">
+                <div class="tile-body">
+                    <div class="form-group">
+                        <textarea id="options_text" class="form-control" rows="10" placeholder="Enter your address"></textarea>
+                    </div>
+                </div>
+                <div class="tile-footer">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-3">
+                            <button id="btnOptions" class="btn btn-outline-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="optionsDisplay">
+                <div class="tile-body">
+                    <div class="bs-component">
+                        <table class="table">
+                            <tbody id="optionsTable">
+                            <%#= will replace by js %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tile-footer">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-3">
+                            <button id="btnOptionsModify" class="btn btn-outline-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>修改</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="tile">
+            <h3 class="tile-title">在每个标准下的重要度</h3>
+            <div class="tile-body">
+                <ul class="nav nav-pills nav-stacked" id="navCriterion">
+                    <%#= will replace by js %>
+                </ul>
+                <div class="form-group">
+                    <div id="currCriteria" hidden></div>
+                    <div id="tblOptionCompare"></div>
+                    <div id="optionsResult"></div>
+                </div>
+            </div>
+            <div class="tile-footer">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-3">
+                        <button id="btnOptionsFire" class="btn btn-outline-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>开始</button>
+                        <button id="btnOptionsReset" class="btn btn-outline-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>重置</button>
+                        <button id="btnOptionsReload" class="btn btn-outline-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>加载</button>
+                        <button id="btnOptionsSave" class="btn btn-outline-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h3 class="tile-title">最终结论</h3>
+            <div class="tile-body">
+                <button id="btnFinal" class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>计算</button>
+                <div class="tile">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>选项</th>
+                            <th>得分</th>
+                        </tr>
+                        </thead>
+                        <tbody id="finalResult">
+                        <%#= will replace by js %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/assets/vendors/jquery-3.3.1.min.js"></script>
+<script src="/assets/vendors/layer/layer.js"></script>
+
+<%= contentFor("pageJS") { %>
+    <%= javascriptTag("games.js") %>
+<% } %>

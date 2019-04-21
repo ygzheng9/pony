@@ -1,0 +1,20 @@
+# build for windows
+
+env=production npx webpack
+GOOS=windows GOARCH=amd64 packr build
+
+bin/
+    .exe
+    .env
+    database.yml
+    config/
+public/
+baseBox/
+locales/
+
+
+# dump table
+pg_dump --host localhost --user postgres --db pony_development --table -Fc words > words.txt
+
+# --schema-only
+pg_restore -U postgres --data-only -d pony_production -t words ./words.txt

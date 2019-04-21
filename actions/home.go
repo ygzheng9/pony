@@ -5,6 +5,12 @@ import "github.com/gobuffalo/buffalo"
 // HomeHandler is a default handler to serve up
 // a home page.
 func homeHandler(c buffalo.Context) error {
+	return c.Render(200, r.HTML("index.html", "layout/empty.html"))
+}
+
+// HomeHandler is a default handler to serve up
+// a home page.
+func valiHandler(c buffalo.Context) error {
 	c.Set("task-title", "Dashboard")
 	c.Set("task-icon", "fa fa-dashboard")
 	c.Set("task-desc", "A free and open source Bootstrap 4 admin template")

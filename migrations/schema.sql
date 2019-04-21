@@ -20,6 +20,43 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: game_options; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.game_options (
+    id uuid NOT NULL,
+    game_id uuid NOT NULL,
+    seq integer NOT NULL,
+    pairs character varying(255) NOT NULL,
+    weights character varying(255) NOT NULL,
+    ratios character varying(255) NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.game_options OWNER TO postgres;
+
+--
+-- Name: games; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.games (
+    id uuid NOT NULL,
+    name character varying(255) NOT NULL,
+    criterion character varying(255) NOT NULL,
+    options character varying(255) NOT NULL,
+    pairs character varying(255) NOT NULL,
+    weights character varying(255) NOT NULL,
+    ratios character varying(255) NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.games OWNER TO postgres;
+
+--
 -- Name: matrices; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -102,6 +139,22 @@ CREATE TABLE public.words (
 
 
 ALTER TABLE public.words OWNER TO postgres;
+
+--
+-- Name: game_options game_options_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.game_options
+    ADD CONSTRAINT game_options_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: games games_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.games
+    ADD CONSTRAINT games_pkey PRIMARY KEY (id);
+
 
 --
 -- Name: matrices matrices_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres

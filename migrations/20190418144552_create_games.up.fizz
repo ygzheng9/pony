@@ -1,0 +1,9 @@
+create_table("games") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("name", "string", {})
+	t.Column("criterion", "string", {})
+	t.Column("options", "string", {})
+	t.Column("pairs", "string", {})
+	t.Column("weights", "string", {})
+	t.Column("ratios", "string", {})
+}

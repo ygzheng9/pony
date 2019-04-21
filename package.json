@@ -7,12 +7,16 @@
     "dependencies": {
         "@antv/data-set": "^0.10.2",
         "@antv/g2": "^3.5.3",
+        "axios": "^0.18.0",
+        "bootbox": "^5.1.2",
         "bootstrap": "4.3.1",
         "chart.js": "^2.8.0",
         "font-awesome": "~4.7.0",
+        "handsontable": "^7.0.2",
         "jquery": "~3.2.1",
         "jquery-ujs": "~1.2.2",
         "popper.js": "^1.14.4",
+        "ramda": "^0.26.1",
         "redom": "^3.20.0"
     },
     "devDependencies": {

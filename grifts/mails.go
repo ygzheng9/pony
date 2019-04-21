@@ -11,8 +11,8 @@ import (
 )
 
 var _ = grift.Namespace("mails", func() {
-	grift.Desc("welcome", "Send welcome mail")
-	grift.Add("welcome", func(c *grift.Context) error {
+	_ = grift.Desc("welcome", "Send welcome mail")
+	_ = grift.Add("welcome", func(c *grift.Context) error {
 		err := mailers.SendWelcomeEmails()
 		if err != nil {
 			log.Panic(err)
@@ -21,8 +21,8 @@ var _ = grift.Namespace("mails", func() {
 		return nil
 	})
 
-	grift.Desc("send", "Send all mails")
-	grift.Add("send", func(c *grift.Context) error {
+	_ = grift.Desc("send", "Send all mails")
+	_ = grift.Add("send", func(c *grift.Context) error {
 		fmt.Println("sending all mails....")
 		err := base.SendAllEmails()
 		if err != nil {

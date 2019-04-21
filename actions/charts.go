@@ -38,7 +38,7 @@ func readSkipWords() []string {
 	return lines
 }
 
-// WordCloudHandle return word frequence
+// WordCloudHandle return word frequencies
 func WordCloudHandle(c buffalo.Context) error {
 	var err error
 
@@ -79,4 +79,68 @@ func WordCloudHandle(c buffalo.Context) error {
 	}
 
 	return c.Render(200, r.JSON(filtered))
+}
+
+// WordFreqHandle return word frequencies
+func WordFreqHandle(c buffalo.Context) error {
+	var err error
+
+	type resultT struct {
+		Level string `db:"level" json:"level"`
+		Count int    `db:"count" json:"count"`
+	}
+
+	// 根据 matrix，period，company 找到之前提交的数据
+	// Get the DB connection from the context
+	tx, ok := c.Value("tx").(*pop.Connection)
+	if !ok {
+		return errors.WithStack(errors.New("no transaction found"))
+	}
+
+	kv := base.KvCache()
+	sugar := base.Sugar()
+	db := tx.TX
+
+	cmdSQL := kv.GetCommand("chart.wordFreq", nil)
+
+	items := []resultT{}
+	err = db.Select(&items, cmdSQL)
+	if err != nil {
+		sugar.Errorf("wordFreq data failed", "sql", cmdSQL, "err", err)
+		return errors.WithStack(err)
+	}
+
+	return c.Render(200, r.JSON(items))
+}
+
+// wordDistHandle return distribution
+func wordDistHandle(c buffalo.Context) error {
+	var err error
+
+	type resultT struct {
+		Word      string `db:"word" json:"word"`
+		WordCount int    `db:"wc_count" json:"wc_count"`
+	}
+
+	// 根据 matrix，period，company 找到之前提交的数据
+	// Get the DB connection from the context
+	tx, ok := c.Value("tx").(*pop.Connection)
+	if !ok {
+		return errors.WithStack(errors.New("no transaction found"))
+	}
+
+	kv := base.KvCache()
+	sugar := base.Sugar()
+	db := tx.TX
+
+	cmdSQL := kv.GetCommand("chart.wordDist", nil)
+
+	items := []resultT{}
+	err = db.Select(&items, cmdSQL)
+	if err != nil {
+		sugar.Errorf("wordFreq data failed", "sql", cmdSQL, "err", err)
+		return errors.WithStack(err)
+	}
+
+	return c.Render(200, r.JSON(items))
 }

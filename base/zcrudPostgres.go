@@ -95,14 +95,14 @@ func genStubCode(table string) ([]string, error) {
 	result = append(result, sep)
 
 	// 只支持单一主键
-	pk := "id"
 	// for _, c := range cols {
 	// 	if c.ColumnKey == "PRI" {
 	// 		pk = c.Name
 	// 		break
 	// 	}
 	// }
-	result = append(result, fmt.Sprintf("DELETE FROM %s WHERE %s = :%s; ", table, pk, pk))
+	const keyName = "id"
+	result = append(result, fmt.Sprintf("DELETE FROM %s WHERE %s = :%s; ", table, keyName, keyName))
 
 	// excel 中各个字段的映射
 	result = append(result, sep)
@@ -207,9 +207,7 @@ func insertField(cols []ColumnInfo, table string) []string {
 
 	result = append(result, ") VALUES ( ")
 
-	for _, v := range vals {
-		result = append(result, v)
-	}
+	result = append(result, vals...)
 
 	result = append(result, ");  ")
 

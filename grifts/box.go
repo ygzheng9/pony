@@ -8,8 +8,8 @@ import (
 )
 
 var _ = grift.Namespace("box", func() {
-	grift.Desc("list", "List all files in baseBox")
-	grift.Add("list", func(c *grift.Context) error {
+	_ = grift.Desc("list", "List all files in baseBox")
+	_ = grift.Add("list", func(c *grift.Context) error {
 		files := base.Box.List()
 		fmt.Println(files)
 

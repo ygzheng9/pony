@@ -12,6 +12,8 @@ import (
 	"github.com/pkg/errors"
 )
 
+const itemType = "L1"
+
 // itemTypeA each column for Type A form
 type itemTypeA struct {
 	Code         string
@@ -40,14 +42,14 @@ func MatrixOpenTypeA(c buffalo.Context) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	if len(info.Period) == 0 {
-		info.Period = "2018"
+	if info.Period == "" {
+		info.Period = defaultPeriod
 	}
-	if len(info.Company) == 0 {
-		info.Company = "PD"
+	if info.Company == "" {
+		info.Company = defaultCompany
 	}
-	if len(info.Version) == 0 {
-		info.Version = "ACTUAL"
+	if info.Version == "" {
+		info.Version = defaultVersion
 	}
 
 	sugar.Debugw("parse parm", "param", info)
@@ -84,12 +86,14 @@ func MatrixOpenTypeA(c buffalo.Context) error {
 	}
 
 	// 与已保存的值做匹配
+
 	for idx, entry := range items {
-		if entry.ItemType == "L1" {
+		if entry.ItemType == itemType {
 			continue
 		}
 
-		for _, r := range results {
+		for i := range results {
+			r := &results[i]
 			if entry.Code == r.Code {
 				items[idx].Value = r.Value
 				break
@@ -154,7 +158,7 @@ func loadTypeA(num string) (string, []itemTypeA, error) {
 		rowData := base.RowReader(readHelper, r)
 
 		// 第一列：
-		if len(rowData(0)) == 0 {
+		if rowData(0) == "" {
 			break
 		}
 
@@ -167,8 +171,8 @@ func loadTypeA(num string) (string, []itemTypeA, error) {
 			ItemType:     "L2",
 		}
 		// 默认都是行项目，如果 第二列(name) 没有，那么表示是章节
-		if len(entry.Name) == 0 {
-			entry.ItemType = "L1"
+		if entry.Name == "" {
+			entry.ItemType = itemType
 		}
 
 		results = append(results, entry)
@@ -198,13 +202,13 @@ func MatrixSubmitTypeA(c buffalo.Context) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	if len(info.Period) == 0 {
+	if info.Period == "" {
 		info.Period = "2018"
 	}
-	if len(info.Company) == 0 {
+	if info.Company == "" {
 		info.Company = "PD"
 	}
-	if len(info.Version) == 0 {
+	if info.Version == "" {
 		info.Version = "ACTUAL"
 	}
 	sugar.Debugw("parse parm", "param", info)
@@ -269,9 +273,8 @@ func MatrixSubmitTypeA(c buffalo.Context) error {
 			// 新增
 			// sugar.Infow("create", "i", m)
 
-			_, err := tx.ValidateAndCreate(&record)
+			_, err = tx.ValidateAndCreate(&record)
 			if err != nil {
-				// return errors.WithStack(err)
 				sugar.Errorw("failed to save index", "entry", record, "err", err)
 				continue
 			}
@@ -279,7 +282,6 @@ func MatrixSubmitTypeA(c buffalo.Context) error {
 			// 更新
 			record.ID = ids[0].ID
 			record.UpdatedAt = now
-			// sugar.Infow("update", "i", m)
 
 			_, err = db.NamedExec(updSQL, record)
 			if err != nil {

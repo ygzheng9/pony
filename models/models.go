@@ -20,7 +20,11 @@ type IDT struct {
 // IDList uuid list
 type IDList []IDT
 
-func init() {
+// func init() {
+// 	Init()
+// }
+
+func Init() {
 	var err error
 	env := envy.Get("GO_ENV", "development")
 	DB, err = pop.Connect(env)

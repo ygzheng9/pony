@@ -22,7 +22,7 @@ type Survey struct {
 }
 
 // String is not required by pop and may be deleted
-func (s Survey) String() string {
+func (s *Survey) String() string {
 	js, _ := json.Marshal(s)
 	return string(js)
 }

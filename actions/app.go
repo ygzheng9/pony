@@ -11,6 +11,8 @@ import (
 	"github.com/gobuffalo/packr/v2"
 	"github.com/unrolled/secure"
 
+	// _ "github.com/konsorten/go-windows-terminal-sequences"
+
 	"pony/models"
 )
 
@@ -21,6 +23,8 @@ var app *buffalo.App
 
 // T for i18
 var T *i18n.Translator
+
+type H map[string]interface{}
 
 // App is where all routes and middleware for buffalo
 // should be defined. This is the nerve center of your
@@ -37,13 +41,17 @@ var T *i18n.Translator
 // declared after it to never be called.
 func App() *buffalo.App {
 	if app == nil {
+		Init()
+
+		models.Init()
+
 		app = buffalo.New(buffalo.Options{
 			Env:         ENV,
 			SessionName: "_pony_session",
 		})
 
 		// Automatically redirect to SSL
-		app.Use(forceSSL())
+		// app.Use(forceSSL())
 
 		// Log request parameters (filters apply).
 		app.Use(paramlogger.ParameterLogger)
@@ -63,6 +71,7 @@ func App() *buffalo.App {
 		app.GET("/", homeHandler)
 		app.GET("/login", loginHandler)
 
+		app.GET("/vali", valiHandler)
 		app.GET("/charts", ChartsHandler)
 		app.GET("/bootstrap-components", UIElementHandler)
 
@@ -78,6 +87,25 @@ func App() *buffalo.App {
 
 		app.GET("/chart/first", ChartFirst)
 		app.GET("/chart/get_wordcloud", WordCloudHandle)
+		app.GET("/chart/get_wordfreq", WordFreqHandle)
+		app.GET("/chart/get_worddist", wordDistHandle)
+
+		// 决策论
+		app.GET("/games/index", gamesIndex)
+
+		// app.GET("/games/byid", gamesByID)
+		app.POST("/games/byid", gamesByID)
+
+		app.POST("/games/create", gamesCreate)
+
+		app.POST("/games/saveCriterion", gamesSaveCriterion)
+		app.POST("/games/saveCriterionPairs", gamesSaveCriterionPairs)
+
+		app.POST("/games/saveOptions", gamesSaveOptions)
+		app.POST("/games/loadOptionPairs", gamesLoadOptionPairs)
+		app.POST("/games/saveOptionPairs", gamesSaveOptionPairs)
+
+		app.POST("/games/calcFinal", gamesCalcFinal)
 
 		// 在生产环境里，页面不存在时，重定向到统一的页面
 		app.GET("/notFound", notFoundHandler)
@@ -98,7 +126,7 @@ func App() *buffalo.App {
 func translations() buffalo.MiddlewareFunc {
 	var err error
 	if T, err = i18n.New(packr.New("app:locales", "../locales"), "en-US"); err != nil {
-		app.Stop(err)
+		_ = app.Stop(err)
 	}
 	return T.Middleware()
 }
@@ -149,7 +177,7 @@ func pageNotFound(status int, err error, c buffalo.Context) error {
 	`
 	res := c.Response()
 	res.WriteHeader(404)
-	res.Write([]byte(tmpl))
+	_, _ = res.Write([]byte(tmpl))
 
 	return nil
 }

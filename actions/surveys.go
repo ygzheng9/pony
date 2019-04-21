@@ -135,9 +135,7 @@ func SurveysSubmit(c buffalo.Context) error {
 
 	if len(answers) > 0 {
 		var err error
-		// var cmdSql string
 
-		// kv := base.KvCache()
 		sugar := base.Sugar()
 		// db := tx.TX
 
@@ -149,10 +147,10 @@ func SurveysSubmit(c buffalo.Context) error {
 		// 	return errors.WithStack(err)
 		// }
 
-		for _, a := range answers {
+		for i := range answers {
+			var a = answers[i]
 			_, err = tx.ValidateAndCreate(&a)
 			if err != nil {
-				// return errors.WithStack(err)
 				sugar.Errorw("failed to save answer", "answer", a, "err", err)
 				continue
 			}

@@ -35,9 +35,9 @@ func TestGenerateInvitation(t *testing.T) {
 	}
 }
 func TestSendAllEmails(t *testing.T) {
+	var err error
 	SetRoot()
 
-	var err error
 	err = SendAllEmails()
 	if err != nil {
 		t.Error(err)

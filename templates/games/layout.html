@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>Survey</title>
+
+    <%= stylesheetTag("application.css") %>
+
+    <link href="/assets/vendors/handsontable/handsontable.full.min.css" rel="stylesheet" media="screen">
+
+    <meta name="csrf-param" content="authenticity_token" />
+    <meta name="csrf-token" content="<%= authenticity_token %>" />
+    <link rel="icon" href="<%= assetPath("images/favicon.ico") %>">
+</head>
+
+<body class="container">
+
+<%= yield %>
+
+<script src="/assets/vendors/handsontable/handsontable.full.min.js"></script>
+
+<%= contentOf("pageJS") %>
+
+</body>
+</html>

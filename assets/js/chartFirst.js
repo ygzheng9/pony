@@ -2,34 +2,6 @@ import G2 from "@antv/g2";
 import DataSet from "@antv/data-set";
 
 $(() => {
-  console.log("first chart");
-
-  function renderFirst() {
-    const data = [
-      { genre: "Sports", sold: 275 },
-      { genre: "Strategy", sold: 115 },
-      { genre: "Action", sold: 120 },
-      { genre: "Shooter", sold: 350 },
-      { genre: "Other", sold: 150 }
-    ]; // G2 对数据源格式的要求，仅仅是 JSON 数组，数组的每个元素是一个标准 JSON 对象。
-    // Step 1: 创建 Chart 对象
-    const chart = new G2.Chart({
-      container: "c1", // 指定图表容器 ID
-      width: 600, // 指定图表宽度
-      height: 300 // 指定图表高度
-    });
-    // Step 2: 载入数据源
-    chart.source(data);
-    // Step 3：创建图形语法，绘制柱状图，由 genre 和 sold 两个属性决定图形位置，genre 映射至 x 轴，sold 映射至 y 轴
-    chart
-      .interval()
-      .position("genre*sold")
-      .color("genre");
-    // Step 4: 渲染图表
-    chart.render();
-  }
-  // renderFirst();
-
   function registerCloud() {
     function getTextAttrs(cfg) {
       return _.assign({}, cfg.style, {
@@ -59,70 +31,7 @@ $(() => {
   }
   registerCloud();
 
-  function renderCloud() {
-    $.getJSON("/assets/data/world-population.json", function(data) {
-      var dv = new DataSet.View().source(data);
-      var range = dv.range("value");
-      var min = range[0];
-      var max = range[1];
-      dv.transform({
-        type: "tag-cloud",
-        fields: ["x", "value"],
-        // size: [window.innerWidth, window.innerHeight],
-        size: [600, 300],
-
-        font: "Verdana",
-        padding: 0,
-        timeInterval: 5000, // max execute time
-        rotate: function rotate() {
-          var random = ~~(Math.random() * 4) % 4;
-          if (random == 2) {
-            random = 0;
-          }
-          return random * 90; // 0, 90, 270
-        },
-        fontSize: function fontSize(d) {
-          if (d.value) {
-            return ((d.value - min) / (max - min)) * (80 - 24) + 24;
-          }
-          return 0;
-        }
-      });
-      var chart = new G2.Chart({
-        container: "idCloud",
-        // width: window.innerWidth,
-        // height: window.innerHeight,
-
-        width: 600,
-        height: 300,
-
-        padding: 0
-      });
-      chart.source(dv, {
-        x: {
-          nice: false
-        },
-        y: {
-          nice: false
-        }
-      });
-      chart.legend(false);
-      chart.axis(false);
-      chart.tooltip({
-        showTitle: false
-      });
-      chart.coord().reflect();
-      chart
-        .point()
-        .position("x*y")
-        .color("category")
-        .shape("cloud")
-        .tooltip("value*category");
-      chart.render();
-    });
-  }
-  // renderCloud();
-
+  // word cloud
   function renderWordCloud() {
     $.getJSON("/chart/get_wordcloud", function(data) {
       var dv = new DataSet.View().source(data);
@@ -155,7 +64,7 @@ $(() => {
       var chart = new G2.Chart({
         container: "idWordCloud",
 
-        width: 1000,
+        forceFit: true,
         height: 600,
 
         padding: 0
@@ -184,4 +93,127 @@ $(() => {
     });
   }
   renderWordCloud();
+
+  // frequence
+  function renderFreq() {
+    $.getJSON("/chart/get_wordfreq", function(data) {
+      var chart = new G2.Chart({
+        container: 'idWordFreq',
+        forceFit: true,
+        // width: 1000,
+        height: 600,
+        padding: [10, 10, 50, 124]
+      });
+
+      data = data.filter(a => a.level > 1);
+      // console.log(data.length);
+
+      chart.source(data, {
+        level: {
+          alias: '提及的人数'
+        },
+        count: {
+          max: 1000,
+          min: 0,
+          nice: false,
+          alias: '提及的次数'
+        }
+      });
+
+      chart.axis('level', {
+        label: {
+          textStyle: {
+            fill: '#8d8d8d',
+            fontSize: 12
+          },
+        },
+        tickLine: {
+          alignWithLabel: false,
+          length: 0
+        },
+        line: {
+          lineWidth: 0
+        },
+        title: {
+          position: 'center',
+        }
+      });
+      chart.axis('count', {
+        label: null,
+        title: {
+          offset: 30,
+          textStyle: {
+            fontSize: 12,
+            fontWeight: 300
+          },
+          position: "center",
+        }
+      });
+      chart.legend(false);
+      chart.coord().transpose();
+      chart.interval().position('level*count').size(26).opacity(1).label('count', {
+        textStyle: {
+          fill: '#8d8d8d'
+        },
+        offset: 10
+      });
+      chart.render();
+    });
+  }
+  renderFreq();
+
+  function renderDist() {
+    $.getJSON('/chart/get_worddist', function(data) {
+      data = data.filter(d => d.wc_count > 20);
+
+      var ds = new DataSet();
+      var dv = ds.createView('dist').source(data);
+      dv.transform({
+        type: 'bin.histogram',
+        field: 'wc_count',
+        binWidth: 20, // 在此修改矩形的宽度，代表真实数值的大小
+        as: ['wc_count', 'count']
+      });
+
+      var chart = new G2.Chart({
+        container: 'idWordDist',
+        forceFit: true,
+        height: window.innerHeight
+      });
+
+      chart.source(dv, {
+        depth: {
+          tickInterval: 4
+        },
+        count: {
+          alias: '关键词数量'
+        },
+        wc_count: {
+          alias: '重复次数'
+        },
+      });
+
+      chart.axis('count', {
+        title: {
+          position: "center",
+        }
+      });
+      chart.axis('wc_count', {
+        title: {
+          position: "center",
+        }
+      });
+
+      chart.tooltip({
+        crosshairs: false,
+        position: 'top',
+        inPlot: false
+      });
+
+
+      chart.interval().position('wc_count*count');
+      chart.render();
+    });
+  }
+  renderDist();
 });

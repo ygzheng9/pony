@@ -10,7 +10,7 @@ import (
 // packr version
 
 // getAllFiles 从指定目录下读取文件
-func getAllFilesBox(folder string) ([]fileInfo, error) {
+func getAllFilesBox(folder string) []fileInfo {
 	sugar := Sugar()
 
 	sugar.Debugw("scan files", "folder", folder)
@@ -62,7 +62,7 @@ func getAllFilesBox(folder string) ([]fileInfo, error) {
 		files = append(files, entry)
 	}
 
-	return files, nil
+	return files
 }
 
 // 1. 读取每个文件，按照约定好的格式，拆分成不同的 command

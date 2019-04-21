@@ -8,7 +8,7 @@ import (
 var r *render.Engine
 var assetsBox = packr.New("app:assets", "../public")
 
-func init() {
+func Init() {
 	r = render.New(render.Options{
 		// HTML layout to be used for all HTML requests:
 		HTMLLayout: "application.html",

@@ -24,7 +24,7 @@ type Matrix struct {
 }
 
 // String is not required by pop and may be deleted
-func (m Matrix) String() string {
+func (m *Matrix) String() string {
 	jm, _ := json.Marshal(m)
 	return string(jm)
 }

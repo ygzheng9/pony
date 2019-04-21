@@ -76,7 +76,6 @@ func (t EmailNotice) Insert() error {
 	var err error
 	db := DB()
 	kv := KvCache()
-	// sugar := Sugar()
 
 	// 创建时间为当前时刻
 	now := time.Now()
@@ -255,7 +254,7 @@ func GenerateInvitation() error {
 		rowData := RowReader(readHelper, r)
 
 		// 第一列：, 第二列：
-		if len(rowData(0)) == 0 && len(rowData(1)) == 0 {
+		if rowData(0) == "" && rowData(1) == "" {
 			break
 		}
 
