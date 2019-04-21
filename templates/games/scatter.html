@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-md-12">
+        <h3 >任务优先级</h3>
+        <div>
+            <div id="scatterData"></div>
+        </div>
+    </div>
+</div>
+
+<script src="/assets/vendors/jquery-3.3.1.min.js"></script>
+<script src="/assets/vendors/layer/layer.js"></script>
+
+<%= contentFor("pageJS") { %>
+    <%= javascriptTag("scatter.js") %>
+<% } %>

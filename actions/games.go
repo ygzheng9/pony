@@ -386,7 +386,11 @@ func gamesCalcMaxEig(s string) (pairCompareT, string, error) {
 	sugar.Debugf("max vectors :\n%v\n", vect)
 
 	ri := []float64{0, 0, 0, 0.58, 0.96, 1.12, 1.24, 1.32, 1.41, 1.45}
-	cr := (v - float64(count)) / ri[count]
+	dm := 2.0
+	if count < len(ri) {
+		dm = ri[count]
+	}
+	cr := (v - float64(count)) / dm
 
 	result := pairCompareT{
 		LambdaMax: v,

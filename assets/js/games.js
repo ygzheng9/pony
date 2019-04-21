@@ -53,7 +53,7 @@ $(() => {
             $("#navItem-0").trigger("click");
         });
     }
-    
+
     // criterion: save & display
     function renderCriterion({ raw, items }) {
         document.getElementById("criterion_text").value = raw;
@@ -536,11 +536,14 @@ $(() => {
             const list = score.map((s, i)=> ({s, o: options[i]}));
             const final = R.sort((a, b) => b.s - a.s, list);
 
+            const max = final[0];
+
+
             const s = final.map((i, idx) => {
                 return `<tr>
                     <td>${idx + 1}</td>
                     <td>${i.o}</td>
-                    <td>${fmtString(i.s, 4)}</td>
+                    <td>${fmtString( i.s / max.s, 4 )}</td>
                 </tr>`
             });
             const tags = s.join(" ");

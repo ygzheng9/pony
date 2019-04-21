@@ -3,7 +3,7 @@ create_table("games") {
 	t.Column("name", "string", {})
 	t.Column("criterion", "string", {})
 	t.Column("options", "string", {})
-	t.Column("pairs", "string", {})
-	t.Column("weights", "string", {})
+	t.Column("pairs", "string", {"size": 2000})
+	t.Column("weights", "string", {"size": 4000})
 	t.Column("ratios", "string", {})
 }
