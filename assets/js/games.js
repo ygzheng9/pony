@@ -533,12 +533,12 @@ $(() => {
                 return;
             }
 
-            const list = score.map((s, i)=> ({s, o: options[i]}));
+            const list = score.map((s, i)=> ({s: Math.abs(s), o: options[i]}));
             const final = R.sort((a, b) => b.s - a.s, list);
 
+            console.log(final);
+
             const max = final[0];
-
-
             const s = final.map((i, idx) => {
                 return `<tr>
                     <td>${idx + 1}</td>

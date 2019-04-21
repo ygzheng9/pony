@@ -2,6 +2,7 @@
 
 env=production npx webpack
 GOOS=windows GOARCH=amd64 packr build
+GOOS=windows GOARCH=amd64 go build -v
 
 bin/
     .exe
