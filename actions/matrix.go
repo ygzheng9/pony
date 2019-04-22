@@ -144,7 +144,7 @@ func loadMatrix(num string) (matrixT, error) {
 	// source, err := ioutil.ReadFile(fileName)
 
 	fileName := "matrix/" + num + ".yaml"
-	source, err := base.Box.Find(fileName)
+	source, err := base.ABox.Find(fileName)
 	if err != nil {
 		return s, err
 	}

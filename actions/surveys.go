@@ -1,12 +1,10 @@
 package actions
 
 import (
-	"io/ioutil"
 	"strings"
 	"time"
 
 	"github.com/gobuffalo/buffalo"
-	"github.com/gobuffalo/envy"
 	"github.com/gobuffalo/pop"
 	"github.com/pkg/errors"
 	"gopkg.in/yaml.v2"
@@ -70,12 +68,15 @@ type questionT struct {
 func loadSurvey(surveyNum string) (surveyT, error) {
 	var s surveyT
 
-	dir := envy.Get("SurveyDir", "")
-	fileName := dir + "/" + surveyNum + ".yaml"
-	source, err := ioutil.ReadFile(fileName)
-	if err != nil {
-		return s, err
-	}
+	// dir := envy.Get("SurveyDir", "")
+	// fileName := dir + "/" + surveyNum + ".yaml"
+	// source, err := ioutil.ReadFile(fileName)
+	// if err != nil {
+	// 	return s, err
+	// }
+
+	fileName := "surveys/" + surveyNum + ".yaml"
+	source, err := base.ABox.Find(fileName)
 
 	err = yaml.Unmarshal(source, &s)
 	if err != nil {

@@ -15,11 +15,11 @@ func getAllFilesBox(folder string) []fileInfo {
 
 	sugar.Debugw("scan files", "folder", folder)
 
-	all := Box.List()
-	filered := []string{}
+	all := ABox.List()
+	var filtered []string
 	for _, a := range all {
 		if strings.HasPrefix(a, folder) {
-			filered = append(filered, a)
+			filtered = append(filtered, a)
 		}
 	}
 
@@ -33,7 +33,7 @@ func getAllFilesBox(folder string) []fileInfo {
 	}
 
 	var files []fileInfo
-	for _, i := range filered {
+	for _, i := range filtered {
 		extension := path.Ext(i)
 		goon, ok := allowed[extension]
 		if !ok || !goon {
@@ -93,7 +93,7 @@ func parseFileBox(info fileInfo) ([]commandInfo, error) {
 	sugar := Sugar()
 
 	filename := info.FullPath
-	s, err := Box.FindString(filename)
+	s, err := ABox.FindString(filename)
 	if err != nil {
 		sugar.Errorw("ReadLines failed:", "file", filename, "err", err)
 

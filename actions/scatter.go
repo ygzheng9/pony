@@ -2,6 +2,7 @@ package actions
 
 import (
 	"bytes"
+	"fmt"
 
 	"github.com/360EntSecGroup-Skylar/excelize"
 	"github.com/gobuffalo/buffalo"
@@ -17,7 +18,12 @@ func scatterShow(c buffalo.Context) error {
 // scatterData get data for scatter
 func scatterData(c buffalo.Context) error {
 	var err error
-	items, err := scatterLoad()
+	sugar := base.Sugar()
+
+	name := c.Param("name")
+	sugar.Debugw("scatter data", "source", name)
+
+	items, err := scatterLoad(name)
 	if err != nil {
 		return c.Render(200, r.JSON(H{
 			"status":  10,
@@ -39,14 +45,19 @@ type scatterItem struct {
 }
 
 // scatterLoad load data from file
-func scatterLoad() ([]scatterItem, error) {
+func scatterLoad(name string) ([]scatterItem, error) {
 	var err error
 	sugar := base.Sugar()
 
 	var results []scatterItem
 
 	fileName := "scatter/S01.xlsx"
-	source, err := base.Box.Find(fileName)
+	if len(name) > 0 {
+		fileName = fmt.Sprintf("scatter/%s.xlsx", name)
+	}
+	sugar.Debugw("box", "file", fileName)
+
+	source, err := base.ABox.Find(fileName)
 	if err != nil {
 		sugar.Errorw("no file", "file", fileName, "err", err)
 		return results, err

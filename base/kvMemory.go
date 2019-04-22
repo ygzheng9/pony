@@ -17,22 +17,22 @@ func (k *MemKV) LoadCommands() error {
 
 	// envy.Load(".env")
 	// local folder version
-	tmplDir := envy.Get("CommandDir", "./config/commands")
-	sugar.Info(tmplDir)
-	files, err := getAllFiles(tmplDir)
+	// tmplDir := envy.Get("CommandDir", "./config/commands")
+	// sugar.Info(tmplDir)
+	// files, err := getAllFiles(tmplDir)
+	// if err != nil {
+	// 	sugar.Errorw("load command dir failed", "command dir", tmplDir, "err", err)
+	// 	return err
+	// }
+	// k.allCommands = parseBatch(files)
 
 	// packr version
-	// tmplDir := "commands/"
-	// files, err := getAllFilesBox(tmplDir)
-	if err != nil {
-		sugar.Errorw("load command dir failed", "command dir", tmplDir, "err", err)
-		return err
-	}
+	tmplDir := "commands/"
+	files := getAllFilesBox(tmplDir)
 
-	k.allCommands = parseBatch(files)
-	// k.allCommands = parseBatchBox(files)
+	k.allCommands = parseBatchBox(files)
 
-	sugar.Infow("load", "len", len(k.allCommands), "cmd", k.allCommands)
+	sugar.Debugw("load", "len", len(k.allCommands))
 
 	return nil
 }

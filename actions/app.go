@@ -108,7 +108,7 @@ func App() *buffalo.App {
 		app.POST("/games/calcFinal", gamesCalcFinal)
 
 		app.GET("/scatter/show", scatterShow)
-		app.GET("/scatter/data", scatterData)
+		app.GET("/scatter/data/{name}", scatterData)
 
 		// 在生产环境里，页面不存在时，重定向到统一的页面
 		app.GET("/notFound", notFoundHandler)

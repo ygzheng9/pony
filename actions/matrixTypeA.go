@@ -135,7 +135,7 @@ func loadTypeA(num string) (string, []itemTypeA, error) {
 
 	// 从文件中读取
 	fileName := "matrix/" + num + ".xlsx"
-	source, err := base.Box.Find(fileName)
+	source, err := base.ABox.Find(fileName)
 	if err != nil {
 		return "", nil, err
 	}
