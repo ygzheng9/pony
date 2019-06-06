@@ -1,7 +1,13 @@
+// 自定义的 override
+//@import "custom";
 // @import "~bootstrap/scss/bootstrap.scss";
-// @import "~@fortawesome/fontawesome/css/all.min.css";
 
+/* Fontawesome 5 config */
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/brands";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/v4-shims";
 
-@import "~font-awesome/css/font-awesome.css";
 
 @import "main.css";

@@ -16,11 +16,12 @@
 
 <body class="container">
 
-<%= yield %>
-
 <script src="/assets/vendors/handsontable/handsontable.full.min.js"></script>
 
-<%= contentOf("pageJS") %>
+<%= yield %>
+
+<%# not working for javascriptTag %>
+<%#= contentOf("pageJS") %>
 
 </body>
 </html>

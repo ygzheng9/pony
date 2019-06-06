@@ -18,7 +18,7 @@ import (
 
 // gamesIndex 决策模型
 func gamesIndex(c buffalo.Context) error {
-	return c.Render(200, r.HTML("games/index.html", "games/layout.html"))
+	return c.Render(200, r.HTML("games/tailwind_index.html", "games/tailwind_layout.html"))
 }
 
 // gamesByID find by id

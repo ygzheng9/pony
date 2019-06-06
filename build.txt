@@ -1,3 +1,6 @@
+
+go get ./...
+
 # build for windows
 
 env=production npx webpack

@@ -27,8 +27,8 @@ CREATE TABLE public.game_options (
     id uuid NOT NULL,
     game_id uuid NOT NULL,
     seq integer NOT NULL,
-    pairs character varying(255) NOT NULL,
-    weights character varying(255) NOT NULL,
+    pairs character varying(2000) NOT NULL,
+    weights character varying(4000) NOT NULL,
     ratios character varying(255) NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -46,8 +46,8 @@ CREATE TABLE public.games (
     name character varying(255) NOT NULL,
     criterion character varying(255) NOT NULL,
     options character varying(255) NOT NULL,
-    pairs character varying(255) NOT NULL,
-    weights character varying(255) NOT NULL,
+    pairs character varying(2000) NOT NULL,
+    weights character varying(4000) NOT NULL,
     ratios character varying(255) NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -55,6 +55,39 @@ CREATE TABLE public.games (
 
 
 ALTER TABLE public.games OWNER TO postgres;
+
+--
+-- Name: inv_items; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.inv_items (
+    id uuid NOT NULL,
+    company character varying(255) NOT NULL,
+    warehouse character varying(255) NOT NULL,
+    year character varying(255) NOT NULL,
+    month character varying(255) NOT NULL,
+    mat_name character varying(255) NOT NULL,
+    mat_code character varying(255) NOT NULL,
+    mat_spec character varying(255) NOT NULL,
+    mat_style character varying(255) NOT NULL,
+    mat_type character varying(255) NOT NULL,
+    tree_type character varying(255) NOT NULL,
+    cust_code character varying(255) NOT NULL,
+    color character varying(255) NOT NULL,
+    mat_unit character varying(255) NOT NULL,
+    mat_qty numeric NOT NULL,
+    mat_amt character varying(255) NOT NULL,
+    mat_grade character varying(255) NOT NULL,
+    cate1 character varying(255) NOT NULL,
+    cate2 character varying(255) NOT NULL,
+    surface character varying(255) NOT NULL,
+    source character varying(255) NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.inv_items OWNER TO postgres;
 
 --
 -- Name: matrices; Type: TABLE; Schema: public; Owner: postgres
@@ -77,6 +110,45 @@ CREATE TABLE public.matrices (
 ALTER TABLE public.matrices OWNER TO postgres;
 
 --
+-- Name: mo_items; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.mo_items (
+    id uuid NOT NULL,
+    company character varying(255) NOT NULL,
+    line character varying(255) NOT NULL,
+    mo_date timestamp without time zone NOT NULL,
+    mo_num character varying(255) NOT NULL,
+    item_num character varying(255) NOT NULL,
+    mat_name character varying(1000) NOT NULL,
+    item_qty numeric NOT NULL,
+    item_unit character varying(255) NOT NULL,
+    cate2 character varying(255) NOT NULL,
+    cate1 character varying(255) NOT NULL,
+    inbound_date timestamp without time zone NOT NULL,
+    warehouse character varying(255) NOT NULL,
+    work_num character varying(255) NOT NULL,
+    mat_code character varying(255) NOT NULL,
+    mo_type character varying(255) NOT NULL,
+    start_date timestamp without time zone NOT NULL,
+    end_date timestamp without time zone NOT NULL,
+    source character varying(255) NOT NULL,
+    shift character varying(255) NOT NULL,
+    step character varying(255) NOT NULL,
+    mat_spec character varying(255) NOT NULL,
+    main_mat_qty numeric NOT NULL,
+    input_mat_qty1 numeric NOT NULL,
+    input_mat_qty2 numeric NOT NULL,
+    claim_qty1 numeric NOT NULL,
+    claim_qty2 numeric NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.mo_items OWNER TO postgres;
+
+--
 -- Name: notices; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -96,6 +168,45 @@ CREATE TABLE public.notices (
 ALTER TABLE public.notices OWNER TO postgres;
 
 --
+-- Name: po_items; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.po_items (
+    id uuid NOT NULL,
+    company character varying(255) NOT NULL,
+    po_date timestamp without time zone NOT NULL,
+    po_num character varying(255) NOT NULL,
+    vendor_name character varying(500) NOT NULL,
+    mat_name character varying(500) NOT NULL,
+    item_qty numeric NOT NULL,
+    item_unit character varying(255) NOT NULL,
+    unit_price numeric NOT NULL,
+    cate2 character varying(255) NOT NULL,
+    cate1 character varying(255) NOT NULL,
+    operator character varying(255) NOT NULL,
+    inbound_qty numeric NOT NULL,
+    outstanding_qty numeric NOT NULL,
+    inbound_date timestamp without time zone NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    line_num character varying(255) DEFAULT ''::character varying NOT NULL,
+    dn_num character varying(255) DEFAULT ''::character varying NOT NULL,
+    dn_item character varying(255) DEFAULT ''::character varying NOT NULL,
+    item_status character varying(255) DEFAULT ''::character varying NOT NULL,
+    mat_code character varying(255) DEFAULT ''::character varying NOT NULL,
+    mat_spec character varying(255) DEFAULT ''::character varying NOT NULL,
+    inbound_unit character varying(255) DEFAULT ''::character varying NOT NULL,
+    arrived_book_qty numeric DEFAULT '0'::numeric NOT NULL,
+    booked_qty character varying(255) DEFAULT '0'::character varying NOT NULL,
+    unbooked_qty character varying(255) DEFAULT '0'::character varying NOT NULL,
+    planned_date timestamp without time zone DEFAULT '2006-01-02 00:00:00'::timestamp without time zone NOT NULL,
+    delayed_days numeric DEFAULT '0'::numeric NOT NULL
+);
+
+
+ALTER TABLE public.po_items OWNER TO postgres;
+
+--
 -- Name: schema_migration; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -105,6 +216,36 @@ CREATE TABLE public.schema_migration (
 
 
 ALTER TABLE public.schema_migration OWNER TO postgres;
+
+--
+-- Name: so_items; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.so_items (
+    id uuid NOT NULL,
+    company character varying(255) NOT NULL,
+    order_num character varying(255) NOT NULL,
+    cust_num character varying(255) NOT NULL,
+    category character varying(255) NOT NULL,
+    serial character varying(255) NOT NULL,
+    mat_name character varying(255) NOT NULL,
+    mat_model character varying(255) NOT NULL,
+    item_qty numeric NOT NULL,
+    period character varying(255) NOT NULL,
+    move_type character varying(255) NOT NULL,
+    sales_type character varying(255) NOT NULL,
+    warehouse character varying(255) NOT NULL,
+    wh_date timestamp without time zone NOT NULL,
+    doc_date timestamp without time zone NOT NULL,
+    book_party character varying(255) NOT NULL,
+    remark character varying(255) NOT NULL,
+    source character varying(255) NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.so_items OWNER TO postgres;
 
 --
 -- Name: surveys; Type: TABLE; Schema: public; Owner: postgres
@@ -157,6 +298,14 @@ ALTER TABLE ONLY public.games
 
 
 --
+-- Name: inv_items inv_items_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inv_items
+    ADD CONSTRAINT inv_items_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: matrices matrices_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -165,11 +314,35 @@ ALTER TABLE ONLY public.matrices
 
 
 --
+-- Name: mo_items mo_items_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.mo_items
+    ADD CONSTRAINT mo_items_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: notices notices_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.notices
     ADD CONSTRAINT notices_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: po_items po_items_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.po_items
+    ADD CONSTRAINT po_items_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: so_items so_items_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.so_items
+    ADD CONSTRAINT so_items_pkey PRIMARY KEY (id);
 
 
 --

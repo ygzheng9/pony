@@ -16,25 +16,32 @@ const configurator = {
       ],
     }
 
-    Glob.sync("./assets/*/*.*").forEach((entry) => {
-      if (entry === './assets/css/application.scss') {
-        return
-      }
+  // only files in ./assets/js or css folder, refer to CopyWebpackPlugin ignore option  
+		Glob.sync("./assets/{js,css}/**/*.*").forEach((entry) => {
+		  if (entry === './assets/css/application.scss') {
+		    return
+		  }
 
-      let key = entry.replace(/(\.\/assets\/(src|js|css|go)\/)|\.(ts|js|s[ac]ss|go)/g, '')
-      if(key.startsWith("_") || (/(ts|js|s[ac]ss|go)$/i).test(entry) == false) {
-        return
-      }
+		  // if not these files, ignore
+		  if ( (/(ts|js|s[ac]ss|go)$/i).test(entry) == false ) {
+		    return 
+		  }
 
-      if( entries[key] == null) {
-        entries[key] = [entry]
-        return
-      }
+		  // ignore files name start with underscore
+		  let key = entry.replace(/(\.\/assets\/(src|js|css|go)\/)|\.(ts|js|s[ac]ss|go)/g, '')
+		  if(key.startsWith("_")) {
+		    return
+		  }
 
-      entries[key].push(entry)
-    })
-    return entries
-  },
+		  if( entries[key] == null) {
+		    entries[key] = [entry]
+		    return
+		  }
+
+		  entries[key].push(entry)
+		})
+		return entries
+	},
 
   plugins() {
     var plugins = [
@@ -57,6 +64,14 @@ const configurator = {
           use: [
             MiniCssExtractPlugin.loader,
             { loader: "css-loader", options: {sourceMap: true}},
+            {
+              loader: "postcss-loader",
+              options: {
+                ident: 'postcss',
+                plugins: () => [require('tailwindcss'), require("autoprefixer")],
+                sourceMap: true
+              }
+            },
             { loader: "sass-loader", options: {sourceMap: true}}
           ]
         },

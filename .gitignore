@@ -22,6 +22,8 @@ coverage.data
 jhw.*
 *.sublime*
 
+templates/abox/dump/
+
 
 dist/
 generated/

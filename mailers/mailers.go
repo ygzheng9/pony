@@ -34,7 +34,7 @@ func init() {
 	}
 
 	r = render.New(render.Options{
-		HTMLLayout:   "layout.html",
+		HTMLLayout:   "tailwind_layout.html",
 		TemplatesBox: packr.New("app:mailers:templates", "../templates/mail"),
 		Helpers:      render.Helpers{},
 	})

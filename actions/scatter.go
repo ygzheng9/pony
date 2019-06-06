@@ -12,7 +12,7 @@ import (
 
 // scatterShow show scatter for tasks
 func scatterShow(c buffalo.Context) error {
-	return c.Render(200, r.HTML("games/scatter.html", "games/layout.html"))
+	return c.Render(200, r.HTML("games/scatter.html", "games/tailwind_layout.html"))
 }
 
 // scatterData get data for scatter

@@ -107,8 +107,19 @@ func App() *buffalo.App {
 
 		app.POST("/games/calcFinal", gamesCalcFinal)
 
+		// 两个维度的散点图
 		app.GET("/scatter/show", scatterShow)
 		app.GET("/scatter/data/{name}", scatterData)
+
+		// tailwind css
+		app.GET("/card/tailwind", tailwindDemo)
+		app.GET("/card/tailwind_admin", tailwindAdmin)
+		app.GET("/card/tailwind_admin_day", tailwindAdminDay)
+		app.GET("/card/tailwind_profile", tailwindProfile)
+		app.GET("/card/tailwind_landing", tailwindLanding)
+		app.GET("/card/tailwind_form", tailwindForm)
+
+		app.GET("/card/bootstrap", bootstrapDemo)
 
 		// 在生产环境里，页面不存在时，重定向到统一的页面
 		app.GET("/notFound", notFoundHandler)
