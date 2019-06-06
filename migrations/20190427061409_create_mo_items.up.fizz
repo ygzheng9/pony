@@ -1,0 +1,32 @@
+create_table("mo_items") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("company", "string", {})
+	t.Column("line", "string", {})
+	t.Column("mo_date", "datetime", {})
+	t.Column("mo_num", "string", {})
+	t.Column("item_num", "string", {})
+	t.Column("mat_name", "string", {"size": 1000})
+	t.Column("item_qty", "float", {})
+	t.Column("item_unit", "string", {})
+	t.Column("cate2", "string", {})
+	t.Column("cate1", "string", {})
+	t.Column("inbound_date", "datetime", {})
+	t.Column("warehouse", "string", {})
+
+    t.Column("work_num", "string", {})
+    t.Column("mat_code", "string", {})
+    t.Column("mo_type", "string", {})
+    t.Column("start_date", "datetime", {})
+    t.Column("end_date", "datetime", {})
+
+    t.Column("source", "string", {})
+
+    t.Column("shift", "string", {})
+    t.Column("step", "string", {})
+    t.Column("mat_spec", "string", {})
+    t.Column("main_mat_qty", "float", {})
+    t.Column("input_mat_qty1", "float", {})
+    t.Column("input_mat_qty2", "float", {})
+    t.Column("claim_qty1", "float", {})
+    t.Column("claim_qty2", "float", {})
+}

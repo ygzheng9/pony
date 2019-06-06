@@ -1,0 +1,21 @@
+create_table("so_items") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("company", "string", {})
+	t.Column("order_num", "string", {})
+	t.Column("cust_num", "string", {})
+	t.Column("category", "string", {})
+	t.Column("serial", "string", {})
+	t.Column("mat_name", "string", {})
+	t.Column("mat_model", "string", {})
+	t.Column("item_qty", "float", {})
+	t.Column("period", "string", {})
+	t.Column("move_type", "string", {})
+	t.Column("sales_type", "string", {})
+	t.Column("warehouse", "string", {})
+	t.Column("wh_date", "datetime", {})
+	t.Column("doc_date", "datetime", {})
+	t.Column("book_party", "string", {})
+	t.Column("remark", "string", {})
+	t.Column("source", "string", {})
+
+}

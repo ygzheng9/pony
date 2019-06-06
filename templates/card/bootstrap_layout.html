@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>Survey</title>
+
+    <%= stylesheetTag("xbootstrap.css") %>
+
+    <meta name="csrf-param" content="authenticity_token" />
+    <meta name="csrf-token" content="<%= authenticity_token %>" />
+    <link rel="icon" href="<%= assetPath("images/favicon.ico") %>">
+</head>
+
+<body class="container">
+<%= yield %>
+</body>
+
+<script src="/assets/vendors/jquery-3.3.1.min.js"></script>
+<script src="/assets/vendors/popper.min.js"></script>
+<script src="/assets/vendors/bootstrap.min.js"></script>
+
+<script>
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    })
+</script>
+</html>

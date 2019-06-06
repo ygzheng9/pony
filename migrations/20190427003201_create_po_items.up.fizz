@@ -1,0 +1,17 @@
+create_table("po_items") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("company", "string", {})
+	t.Column("po_date", "datetime", {})
+	t.Column("po_num", "string", {})
+	t.Column("vendor_name", "string", {"size": 500})
+	t.Column("mat_name", "string", {"size": 500})
+	t.Column("item_qty", "float", {})
+	t.Column("item_unit", "string", {})
+	t.Column("unit_price", "float", {})
+	t.Column("cate2", "string", {})
+	t.Column("cate1", "string", {})
+	t.Column("operator", "string", {})
+	t.Column("inbound_qty", "float", {})
+	t.Column("outstanding_qty", "float", {})
+	t.Column("inbound_date", "datetime", {})
+}

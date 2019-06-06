@@ -1,0 +1,5 @@
+add_column("po_items", "line_num", "string", {"default": ""})
+add_column("po_items", "dn_num", "string", {"default": ""})
+add_column("po_items", "dn_item", "string", {"default": ""})
+
+
