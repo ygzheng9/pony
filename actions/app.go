@@ -71,12 +71,10 @@ func App() *buffalo.App {
 		app.GET("/", homeHandler)
 		app.GET("/login", loginHandler)
 
-		app.GET("/vali", valiHandler)
-		app.GET("/charts", ChartsHandler)
-		app.GET("/bootstrap-components", UIElementHandler)
-
+		// all routes
 		app.GET("/routes", routesHandler)
 
+		// biz logic
 		app.GET("/surveys/open", SurveysOpen)
 		app.POST("/surveys/submit", SurveysSubmit)
 
@@ -119,7 +117,13 @@ func App() *buffalo.App {
 		app.GET("/card/tailwind_landing", tailwindLanding)
 		app.GET("/card/tailwind_form", tailwindForm)
 
+		// bootstrap css
 		app.GET("/card/bootstrap", bootstrapDemo)
+
+		// vali admin
+		app.GET("/vali/index", valiHandler)
+		app.GET("/vali/charts", ChartsHandler)
+		app.GET("/vali/bootstrap-components", UIElementHandler)
 
 		// 在生产环境里，页面不存在时，重定向到统一的页面
 		app.GET("/notFound", notFoundHandler)

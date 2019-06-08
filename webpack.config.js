@@ -3,7 +3,10 @@ const Glob = require("glob");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
+
 const CleanObsoleteChunks = require('webpack-clean-obsolete-chunks');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const LiveReloadPlugin = require('webpack-livereload-plugin');
 
@@ -45,7 +48,9 @@ const configurator = {
 
   plugins() {
     var plugins = [
+      new Webpack.ProgressPlugin(),
       new CleanObsoleteChunks(),
+      new CleanWebpackPlugin(),
       new Webpack.ProvidePlugin({$: "jquery",jQuery: "jquery"}),
       new MiniCssExtractPlugin({filename: "[name].[contenthash].css"}),
       new CopyWebpackPlugin([{from: "./assets",to: ""}], {copyUnmodified: true,ignore: ["css/**", "js/**", "src/**"] }),
