@@ -1,6 +1,9 @@
 package actions
 
 import (
+	"strings"
+
+	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/buffalo/render"
 	"github.com/gobuffalo/packr/v2"
 )
@@ -22,6 +25,22 @@ func Init() {
 			// uncomment for non-Bootstrap form helpers:
 			// "form":     plush.FormHelper,
 			// "form_for": plush.FormForHelper,
+			"isCurrentPathName": func(current buffalo.RouteInfo, name string) string {
+				// 子菜单选中时，父菜单也得选中
+				parts := strings.Split(name, " ")
+
+				for _, s := range parts {
+					f := "tabler" + s + "Path"
+
+					// fmt.Printf("a=%s, b=%s;", current.PathName, f)
+
+					if strings.EqualFold(current.PathName, f) {
+						return "active"
+					}
+				}
+
+				return ""
+			},
 		},
 	})
 }

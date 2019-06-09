@@ -125,6 +125,19 @@ func App() *buffalo.App {
 		app.GET("/vali/charts", ChartsHandler)
 		app.GET("/vali/bootstrap-components", UIElementHandler)
 
+		// tabler
+		g := app.Group("/tabler")
+		g.GET("/index", tablerIndex)
+		g.GET("/cards", tablerCard)
+		g.GET("/pricing-cards", tablerPricingCard)
+		g.GET("/charts", tablerCharts)
+		g.GET("/profile", tablerProfile)
+		g.GET("/empty", tablerEmpty)
+		g.GET("/email", tablerEmail)
+		g.GET("/form-elements", tablerFormElements)
+		g.GET("/store", tablerStore)
+		g.GET("/blog", tablerBlog)
+
 		// 在生产环境里，页面不存在时，重定向到统一的页面
 		app.GET("/notFound", notFoundHandler)
 		// if ENV == "production" {

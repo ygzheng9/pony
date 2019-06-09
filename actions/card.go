@@ -30,6 +30,8 @@ func bootstrapDemo(c buffalo.Context) error {
 	return c.Render(200, r.HTML("card/bootstrap_index.html", "card/bootstrap_layout.html"))
 }
 
+//////////////////////////////////////////////
+
 // valiRender for all files under vali dir
 func valiRender(c buffalo.Context, page string) error {
 	const valiTemplate = "vali/layout/main.html"
@@ -63,4 +65,52 @@ func UIElementHandler(c buffalo.Context) error {
 	c.Set("task-desc", "Bootstrap Components")
 
 	return valiRender(c, "bootstrap-components.html")
+}
+
+//////////////////////////////////////////////
+func tablerRender(c buffalo.Context, page string) error {
+	const valiTemplate = "tabler/layout/main.html"
+	fullPage := "tabler/" + page
+
+	return c.Render(200, r.HTML(fullPage, valiTemplate))
+}
+
+func tablerIndex(c buffalo.Context) error {
+	return tablerRender(c, "index.html")
+}
+
+func tablerCard(c buffalo.Context) error {
+	return tablerRender(c, "cards.html")
+}
+
+func tablerPricingCard(c buffalo.Context) error {
+	return tablerRender(c, "pricing-cards.html")
+}
+
+func tablerCharts(c buffalo.Context) error {
+	return tablerRender(c, "charts.html")
+}
+
+func tablerProfile(c buffalo.Context) error {
+	return tablerRender(c, "profile.html")
+}
+
+func tablerEmpty(c buffalo.Context) error {
+	return tablerRender(c, "empty.html")
+}
+
+func tablerEmail(c buffalo.Context) error {
+	return tablerRender(c, "email.html")
+}
+
+func tablerFormElements(c buffalo.Context) error {
+	return tablerRender(c, "form-elements.html")
+}
+
+func tablerStore(c buffalo.Context) error {
+	return tablerRender(c, "store.html")
+}
+
+func tablerBlog(c buffalo.Context) error {
+	return tablerRender(c, "blog.html")
 }
