@@ -3,6 +3,9 @@
 
 require("../src/main.js");
 
+// require("src/main.js");
+
+
 $(() => {
     console.log("application.js");
 });

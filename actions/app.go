@@ -138,6 +138,12 @@ func App() *buffalo.App {
 		g.GET("/store", tablerStore)
 		g.GET("/blog", tablerBlog)
 
+		// redomHandler
+		app.GET("/fe/redom", redomHandler)
+		app.GET("/fe/react", reactHandler)
+		app.GET("/fe/preact", preactHandler)
+		app.GET("/fe/inferno", infernoHandler)
+
 		// 在生产环境里，页面不存在时，重定向到统一的页面
 		app.GET("/notFound", notFoundHandler)
 		// if ENV == "production" {
