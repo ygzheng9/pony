@@ -12,9 +12,13 @@ bin/
     .env
     database.yml
     config/
+templates/
 public/
 baseBox/
 locales/
+
+# cd bin
+GO_ENV=production PORT=5910  ./exefile
 
 
 # dump table
