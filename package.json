@@ -13,7 +13,7 @@
         "babel-plugin-inferno": "^6.0.5",
         "bootbox": "^5.1.2",
         "bootstrap": "4.3.1",
-        "chart.js": "^2.8.0",
+        "chart.js": "^2.9.4",
         "font-awesome": "~4.7.0",
         "handsontable": "^7.0.2",
         "inferno": "^7.1.12",
